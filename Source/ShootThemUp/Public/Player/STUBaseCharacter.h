@@ -8,6 +8,8 @@
 
 class UCameraComponent;
 class USpringArmComponent;
+class USTUHealthComponent;
+class UTextRenderComponent;
 
 UCLASS() class SHOOTTHEMUP_API ASTUBaseCharacter : public ACharacter
 {
@@ -27,6 +29,12 @@ protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
     USpringArmComponent* SpringArmComponent;
 
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+    USTUHealthComponent* HealthComponent;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+    UTextRenderComponent* HealthTextComponent;
+
 public:
     // Called every frame
     virtual void Tick(float DeltaTime) override;
@@ -36,6 +44,9 @@ public:
 
     UFUNCTION(BlueprintCallable, Category = "Movement")
     bool IsRunning() const;
+
+    UFUNCTION(BlueprintCallable, Category = "Movement")
+    float GetMovementDirection() const;
 
 private:
     bool WantsToRun = false;
