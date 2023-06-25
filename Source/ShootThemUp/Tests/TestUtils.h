@@ -9,9 +9,6 @@
 #include "Engine/Blueprint.h"
 #include "Tests/AutomationCommon.h"
 #include "Misc/OutputDeviceNull.h"
-#include "Blueprint/WidgetBlueprintLibrary.h"
-#include "Blueprint/WidgetTree.h"
-#include "Blueprint/UserWidget.h"
 
 namespace ShootThemUp
 {
