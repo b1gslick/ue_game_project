@@ -7,11 +7,10 @@
 #include "STUFireDamageType.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class SHOOTTHEMUP_API USTUFireDamageType : public UDamageType
 {
-	GENERATED_BODY()
-	
+    GENERATED_BODY()
 };
