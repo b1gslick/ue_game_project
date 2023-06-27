@@ -29,6 +29,11 @@ ASTUBaseCharacter::ASTUBaseCharacter(const FObjectInitializer& ObjInit)
     HealthTextComponent->SetupAttachment(GetRootComponent());
 }
 
+float ASTUBaseCharacter::GetHealth() const
+{
+    return HealthComponent->GetHealth();
+}
+
 void ASTUBaseCharacter::BeginPlay()
 {
     Super::BeginPlay();

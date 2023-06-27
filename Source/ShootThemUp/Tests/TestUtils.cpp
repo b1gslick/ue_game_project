@@ -85,5 +85,17 @@ void FastRunPressed(UInputComponent* InputComponent)
     DoInputAction(InputComponent, "Run", EKeys::LeftShift);
 }
 
+void JumpPressed(UInputComponent* InputComponent)
+{
+    DoInputAction(InputComponent, "Jump", EKeys::SpaceBar);
+}
+void SpecCloseLevel(UWorld* World)
+{
+
+    if (APlayerController* PC = World->GetFirstPlayerController())
+    {
+        PC->ConsoleCommand(TEXT("Exit"), true);
+    }
+}
 }  // namespace Test
 }  // namespace ShootThemUp

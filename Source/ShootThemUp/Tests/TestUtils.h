@@ -33,6 +33,7 @@ T* CreateBlueprintDeferred(UWorld* World, const FString& Name, const FTransform&
     return (World && Blueprint) ? World->SpawnActorDeferred<T>(Blueprint->GeneratedClass, Transform)
                                 : nullptr;  // Spawn blueprint if pointer is not null, else return null
 }
+void JumpPressed(UInputComponent* InputComponent);
 
 class LevelScope
 {
@@ -50,6 +51,8 @@ int32 GetAxisBindingIndexByName(UInputComponent* InputComp, const FString& AxisN
 void DoInputAction(UInputComponent* InputComponent, const FString& ActionName, const FKey& Key);
 
 void FastRunPressed(UInputComponent* InputComponent);
+
+void SpecCloseLevel(UWorld* World);
 
 }  // namespace Test
 }  // namespace ShootThemUp

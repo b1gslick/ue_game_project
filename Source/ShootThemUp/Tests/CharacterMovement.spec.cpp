@@ -32,6 +32,7 @@ const FTransform InitialTransform{FVector{0.0f, -240.0f, 110.0f}};
 }  // namespace
 
 DEFINE_LATENT_AUTOMATION_COMMAND_ONE_PARAMETER(FFastRunLatentCommand, UInputComponent*, InputComponent);
+
 bool FFastRunLatentCommand::Update()
 {
     FastRunPressed(InputComponent);
