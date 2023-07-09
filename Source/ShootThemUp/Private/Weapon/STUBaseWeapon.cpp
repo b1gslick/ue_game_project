@@ -24,45 +24,11 @@ void ASTUBaseWeapon::BeginPlay()
     check(WeaponMesh);
 }
 
-void ASTUBaseWeapon::Fire()
-{
-    MakeShot();
-}
+void ASTUBaseWeapon::StartFire() {}
 
-void ASTUBaseWeapon::MakeShot()
-{
-    if (!GetWorld()) return;
+void ASTUBaseWeapon::StopFire() {}
 
-    FVector TraceStart, TraceEnd;
-
-    if (!GetTraceData(TraceStart, TraceEnd)) return;
-
-    FHitResult HitResult;
-    MakeHit(HitResult, TraceStart, TraceEnd);
-
-    FString HeadBone = "b_Head";
-
-    if (HitResult.bBlockingHit)
-    {
-        DrawDebugLine(GetWorld(), GetMuzzleWorldLocation(), HitResult.ImpactPoint, FColor::Red, false, 3.0f, 0, 3.0f);
-        DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 10.0f, 24, FColor::Red, false, 5.0f);
-        AActor* Target = HitResult.HitObjectHandle.GetManagingActor();
-        const auto Player = Cast<ACharacter>(GetOwner());
-
-        if (HitResult.BoneName.ToString() == HeadBone)
-        {
-            Target->TakeDamage(HitDamagePoints.Head, FDamageEvent{}, nullptr, Player);
-        }
-        else
-        {
-            Target->TakeDamage(HitDamagePoints.Other, FDamageEvent{}, nullptr, Player);
-        }
-    }
-    else
-    {
-        DrawDebugLine(GetWorld(), GetMuzzleWorldLocation(), TraceEnd, FColor::Red, false, 3.0f, 0, 3.0f);
-    }
-}
+void ASTUBaseWeapon::MakeShot() {}
 
 APlayerController* ASTUBaseWeapon::GetPlayerController() const
 {
@@ -107,4 +73,22 @@ void ASTUBaseWeapon::MakeHit(FHitResult& HitResult, const FVector& TraceStart, c
     FCollisionQueryParams CollisionParams;
     CollisionParams.AddIgnoredActor(GetOwner());
     GetWorld()->LineTraceSingleByChannel(HitResult, TraceStart, TraceEnd, ECollisionChannel::ECC_Visibility, CollisionParams);
+}
+
+void ASTUBaseWeapon::MakeDamage(const FHitResult& HitResult)
+{
+    FString HeadBone = "b_Head";
+
+    AActor* Target = HitResult.GetActor();
+    if (!Target) return;
+    const auto Player = Cast<ACharacter>(GetOwner());
+
+    if (HitResult.BoneName.ToString() == HeadBone)
+    {
+        Target->TakeDamage(HitDamagePoints.Head, FDamageEvent{}, GetPlayerController(), this);
+    }
+    else
+    {
+        Target->TakeDamage(HitDamagePoints.Other, FDamageEvent{}, GetPlayerController(), this);
+    }
 }
