@@ -33,6 +33,13 @@ const FTransform InitialTransform{FVector{0.0f, -240.0f, 110.0f}};
 
 DEFINE_LATENT_AUTOMATION_COMMAND_ONE_PARAMETER(FFastRunLatentCommand, UInputComponent*, InputComponent);
 
+DEFINE_LATENT_AUTOMATION_COMMAND_ONE_PARAMETER(FNewJumpLatentCommand, UInputComponent*, InputComponent);
+bool FNewJumpLatentCommand::Update()
+{
+    JumpPressed(InputComponent);
+    return true;
+}
+
 bool FFastRunLatentCommand::Update()
 {
     FastRunPressed(InputComponent);
@@ -62,6 +69,20 @@ void FTestCharacterMovement::Define()
 
                     ADD_LATENT_AUTOMATION_COMMAND(FEngineWaitLatentCommand(5.0f));
                     ADD_LATENT_AUTOMATION_COMMAND(FFastRunLatentCommand(SUT_Character->InputComponent));
+
+                    return true;
+                });
+
+            It("Jump",
+                [this]()
+                {
+                    const FTransform LandedInitialTransform{FVector{1200.0f, -600.0f, 100.0f}};
+                    ASTUBaseCharacter* SUT_Character =
+                        CreateBlueprintDeferred<ASTUBaseCharacter>(World, Character_bp, LandedInitialTransform);
+                    if (!TestNotNull("Character exist", SUT_Character)) return false;
+                    SUT_Character->FinishSpawning(LandedInitialTransform);
+                    ADD_LATENT_AUTOMATION_COMMAND(FEngineWaitLatentCommand(1.0f))
+                    ADD_LATENT_AUTOMATION_COMMAND(FNewJumpLatentCommand(SUT_Character->InputComponent));
 
                     return true;
                 });
