@@ -74,21 +74,3 @@ void ASTUBaseWeapon::MakeHit(FHitResult& HitResult, const FVector& TraceStart, c
     CollisionParams.AddIgnoredActor(GetOwner());
     GetWorld()->LineTraceSingleByChannel(HitResult, TraceStart, TraceEnd, ECollisionChannel::ECC_Visibility, CollisionParams);
 }
-
-void ASTUBaseWeapon::MakeDamage(const FHitResult& HitResult)
-{
-    FString HeadBone = "b_Head";
-
-    AActor* Target = HitResult.GetActor();
-    if (!Target) return;
-    const auto Player = Cast<ACharacter>(GetOwner());
-
-    if (HitResult.BoneName.ToString() == HeadBone)
-    {
-        Target->TakeDamage(HitDamagePoints.Head, FDamageEvent{}, GetPlayerController(), this);
-    }
-    else
-    {
-        Target->TakeDamage(HitDamagePoints.Other, FDamageEvent{}, GetPlayerController(), this);
-    }
-}

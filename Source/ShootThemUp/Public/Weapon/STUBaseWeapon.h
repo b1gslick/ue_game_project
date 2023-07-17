@@ -8,26 +8,6 @@
 
 class USkeletalMeshComponent;
 
-USTRUCT(BlueprintType)
-struct FHitDamagePoints
-{
-    GENERATED_USTRUCT_BODY()
-
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (ClampMin = "0.1"))
-    float Head{50.0f};
-
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (ClampMin = "0.1"))
-    float Other{10.0f};
-
-    FString ToString() const
-    {                                                       //
-        return FString::Printf(TEXT("(Head=%f,Other=%f)"),  //
-            Head,                                           //
-            Other                                           //
-        );
-    }
-};
-
 UCLASS()
 class SHOOTTHEMUP_API ASTUBaseWeapon : public AActor
 {
@@ -40,13 +20,13 @@ public:
     virtual void StopFire();
 
 protected:
-    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Components")
     USkeletalMeshComponent* WeaponMesh;
 
-    UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
     FName MuzzleSocketName = "MuzzleSocket";
 
-    UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
     float TraceMaxDistance = 1500.0f;
 
     virtual void BeginPlay() override;
@@ -59,9 +39,4 @@ protected:
     FVector GetMuzzleWorldLocation() const;
 
     void MakeHit(FHitResult& HitResult, const FVector& TraceStart, const FVector& TraceEnd);
-
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "DamageAmountByHitPoint")
-    FHitDamagePoints HitDamagePoints;
-
-    void MakeDamage(const FHitResult& HitResult);
 };

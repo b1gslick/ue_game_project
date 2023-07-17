@@ -3,6 +3,8 @@
 #include "Weapon/STURifleWeapon.h"
 #include "Engine/World.h"
 #include "DrawDebugHelpers.h"
+#include "GameFramework/Character.h"
+#include "GameFramework/Controller.h"
 
 void ASTURifleWeapon::StartFire()
 {
@@ -50,4 +52,22 @@ bool ASTURifleWeapon::GetTraceData(FVector& TraceStart, FVector& TraceEnd) const
     const FVector ShootDirection = FMath::VRandCone(ViewRotation.Vector(), HalfRad);
     TraceEnd = TraceStart + ShootDirection * TraceMaxDistance;
     return true;
+}
+
+void ASTURifleWeapon::MakeDamage(const FHitResult& HitResult)
+{
+    FString HeadBone = "b_Head";
+
+    AActor* Target = HitResult.GetActor();
+    if (!Target) return;
+    const auto Player = Cast<ACharacter>(GetOwner());
+
+    if (HitResult.BoneName.ToString() == HeadBone)
+    {
+        Target->TakeDamage(HitDamagePoints.Head, FDamageEvent{}, GetPlayerController(), this);
+    }
+    else
+    {
+        Target->TakeDamage(HitDamagePoints.Other, FDamageEvent{}, GetPlayerController(), this);
+    }
 }
