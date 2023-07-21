@@ -86,6 +86,8 @@ void FTestCharacterMovement::Define()
 
                     return true;
                 });
+
+            AfterEach([this]() { SpecCloseLevel(World); });
         });
 }
 
