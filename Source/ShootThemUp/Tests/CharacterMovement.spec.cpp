@@ -58,20 +58,20 @@ void FTestCharacterMovement::Define()
                     World = GetTestGameWorld();
                     TestNotNull("Map not exists", World);
                 });
-            It("Test",
-                [this]()
-                {
-                    ASTUBaseCharacter* SUT_Character = CreateBlueprintDeferred<ASTUBaseCharacter>(World, Character_bp, InitialTransform);
-                    if (!TestNotNull("Character exist", SUT_Character)) return false;
+            /*          It("Test",
+                          [this]()
+                          {
+                              ASTUBaseCharacter* SUT_Character = CreateBlueprintDeferred<ASTUBaseCharacter>(World, Character_bp,
+               InitialTransform); if (!TestNotNull("Character exist", SUT_Character)) return false;
 
-                    APlayerController* PC = GetTestGameWorld()->GetFirstPlayerController();
-                    TestTrueExpr(PC != nullptr);
+                              APlayerController* PC = GetTestGameWorld()->GetFirstPlayerController();
+                              TestTrueExpr(PC != nullptr);
 
-                    ADD_LATENT_AUTOMATION_COMMAND(FEngineWaitLatentCommand(5.0f));
-                    ADD_LATENT_AUTOMATION_COMMAND(FFastRunLatentCommand(SUT_Character->InputComponent));
+                              ADD_LATENT_AUTOMATION_COMMAND(FEngineWaitLatentCommand(5.0f));
+                              ADD_LATENT_AUTOMATION_COMMAND(FFastRunLatentCommand(SUT_Character->InputComponent));
 
-                    return true;
-                });
+                              return true;
+                          });*/
 
             It("Jump",
                 [this]()

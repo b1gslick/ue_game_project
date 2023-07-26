@@ -4,21 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "STUCoreTypes.h"
 #include "STUWeaponComponent.generated.h"
 
 class ASTUBaseWeapon;
-
-USTRUCT(BlueprintType)
-struct FWeaponData
-{
-    GENERATED_USTRUCT_BODY()
-
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
-    TSubclassOf<ASTUBaseWeapon> WeaponClass;
-
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
-    UAnimMontage* ReloadAnimMontage;
-};
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class SHOOTTHEMUP_API USTUWeaponComponent : public UActorComponent
@@ -61,6 +50,7 @@ private:
 
     int32 CurrentWeaponIndex = 0;
     bool EquipAnimInProgress = false;
+    bool ReloadAnimInProgress = false;
 
     void SpawnWeapons();
     void AttachWeaponToSocket(ASTUBaseWeapon* Weapon, USceneComponent* SceneComponent, const FName& SocketName);
@@ -70,7 +60,12 @@ private:
 
     void InitAnimations();
     void OnEquipFinished(USkeletalMeshComponent* MeshComponent);
+    void OnReloadFinished(USkeletalMeshComponent* MeshComponent);
 
     bool CanFire() const;
     bool CanEquip() const;
+    bool CanReload() const;
+
+    void OnEmptyClip();
+    void ChangeClip();
 };

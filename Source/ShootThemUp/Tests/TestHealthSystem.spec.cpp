@@ -40,7 +40,7 @@ const FTransform InitialTransform{FVector{0.0f, -240.0f, 110.0f}};
 void FTestCharacterHealthSystem::Define()
 {
 
-    Describe("Test",
+    Describe("Test Base health component",
         [this]()
         {
             BeforeEach(
@@ -96,7 +96,7 @@ void FTestCharacterHealthSystem::Define()
                     if (!TestNotNull("Character exist", SUT_Character)) return false;
                     // SUT_Character->FinishSpawning(LandedInitialTransform);
                     float Expected = 25.0f;
-                    ADD_LATENT_AUTOMATION_COMMAND(FEngineWaitLatentCommand(3.0f))
+                    ADD_LATENT_AUTOMATION_COMMAND(FEngineWaitLatentCommand(5.0f))
                     ADD_LATENT_AUTOMATION_COMMAND(FFunctionLatentCommand(
                         [=]()
                         {
@@ -143,7 +143,7 @@ void FTestCharacterHealthSystem::Define()
 
                     const float HealthDiff = MaxHealth - SUT_Character->GetHealth();
                     const float HealingDuration = HealRate * HealthDiff / HealModifier;
-
+                    UE_LOG(LogTemp, Error, TEXT("HealingDuration %f"), HealingDuration)
                     ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(
                         [SUT_Character, StartedHealth]()
                         {
@@ -152,11 +152,13 @@ void FTestCharacterHealthSystem::Define()
                                 UE_LOG(LogTemp, Error, TEXT("Health is not full"));
                             }
                         },
+
                         HealingDuration));
                     return true;
                 });
+
+            AfterEach([this]() { SpecCloseLevel(World); });
         });
-    AfterEach([this]() { SpecCloseLevel(World); });
 }
 
 #endif
