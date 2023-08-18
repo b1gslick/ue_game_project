@@ -6,6 +6,8 @@
 #include "Weapon/STUBaseWeapon.h"
 #include "STURifleWeapon.generated.h"
 
+class USTUWeaponFXComponent;
+
 USTRUCT(BlueprintType)
 struct FHitDamagePoints
 {
@@ -32,6 +34,8 @@ class SHOOTTHEMUP_API ASTURifleWeapon : public ASTUBaseWeapon
     GENERATED_BODY()
 
 public:
+    ASTURifleWeapon();
+
     virtual void StartFire() override;
     virtual void StopFire() override;
 
@@ -42,8 +46,12 @@ protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
     float BulletSpread = 1.5f;
 
+    virtual void BeginPlay() override;
     virtual void MakeShot() override;
     virtual bool GetTraceData(FVector& TraceStart, FVector& TraceEnd) const override;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
+    USTUWeaponFXComponent* WeaponFXComponent;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "DamageAmountByHitPoint")
     FHitDamagePoints HitDamagePoints;

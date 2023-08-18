@@ -8,6 +8,7 @@
 
 class USphereComponent;
 class UProjectileMovementComponent;
+class USTUWeaponFXComponent;
 
 UCLASS()
 class SHOOTTHEMUP_API ASTUProjectile : public AActor
@@ -24,6 +25,9 @@ protected:
 
     UPROPERTY(VisibleAnywhere, Category = "Weapon")
     UProjectileMovementComponent* MovementComponent;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
+    USTUWeaponFXComponent* WeaponFXComponent;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
     float DamageRadius = 200.0f;
