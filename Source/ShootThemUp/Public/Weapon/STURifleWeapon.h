@@ -15,10 +15,10 @@ struct FHitDamagePoints
 {
     GENERATED_USTRUCT_BODY()
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (ClampMin = "0.1"))
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (ClampMin = "0.1"), Category = "Ammo")
     float Head{50.0f};
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (ClampMin = "0.1"))
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (ClampMin = "0.1"), Category = "Ammo")
     float Other{10.0f};
 
     FString ToString() const

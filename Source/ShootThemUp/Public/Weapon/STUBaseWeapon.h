@@ -23,6 +23,7 @@ public:
 
     virtual void StartFire();
     virtual void StopFire();
+    bool IsAmmoEmpty() const;
 
     void ChangeClip();
     bool CanReload() const;
@@ -64,7 +65,7 @@ protected:
     void MakeHit(FHitResult& HitResult, const FVector& TraceStart, const FVector& TraceEnd);
 
     void DecreaseAmmo();
-    bool IsAmmoEmpty() const;
+
     bool IsClipEmpty() const;
     bool IsAmmoFull() const;
 

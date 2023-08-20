@@ -1,7 +1,7 @@
 // Shoot Them Up game, All right resievied
 
 #include "AI/Tasks/STUNextLocationTask.h"
-#include "BehaviorTree/blackboardComponent.h"
+#include "BehaviorTree/BlackboardComponent.h"
 #include "AIController.h"
 #include "NavigationSystem.h"
 
@@ -24,8 +24,15 @@ EBTNodeResult::Type USTUNextLocationTask::ExecuteTask(UBehaviorTreeComponent& Ow
     if (!NavSys) return EBTNodeResult::Failed;
 
     FNavLocation NavLocation;
+    auto Location = Pawn->GetActorLocation();
+    if (!SelfCenter)
+    {
+        auto CenterActor = Cast<AActor>(Blackboard->GetValueAsObject(CenterActorKey.SelectedKeyName));
+        if (!CenterActor) return EBTNodeResult::Failed;
+        Location = CenterActor->GetActorLocation();
+    }
 
-    const auto Found = NavSys->GetRandomReachablePointInRadius(Pawn->GetActorLocation(), Radius, NavLocation);
+    const auto Found = NavSys->GetRandomReachablePointInRadius(Location, Radius, NavLocation);
 
     if (!Found) return EBTNodeResult::Failed;
 

@@ -24,13 +24,6 @@ END_DEFINE_SPEC(FTestCharacterMovement)
 
 using namespace ShootThemUp::Test;
 
-namespace
-{
-constexpr char* MapName = "/Game/Levels/TestLevel";
-constexpr char* Character_bp = "/Script/Engine.Blueprint'/Game/Player/BP_STUBaseCharacter.BP_STUBaseCharacter'";
-const FTransform InitialTransform{FVector{0.0f, -240.0f, 110.0f}};
-}  // namespace
-
 DEFINE_LATENT_AUTOMATION_COMMAND_ONE_PARAMETER(FFastRunLatentCommand, UInputComponent*, InputComponent);
 
 DEFINE_LATENT_AUTOMATION_COMMAND_ONE_PARAMETER(FNewJumpLatentCommand, UInputComponent*, InputComponent);

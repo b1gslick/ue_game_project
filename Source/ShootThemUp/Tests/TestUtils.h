@@ -42,6 +42,10 @@ public:
     ~LevelScope() { ADD_LATENT_AUTOMATION_COMMAND(FExitGameCommand); }
 };
 
+constexpr char* MapName = "/Game/Levels/TestLevel";
+constexpr char* Character_bp = "/Script/Engine.Blueprint'/Game/Player/BP_STUBaseCharacter.BP_STUBaseCharacter'";
+const FTransform InitialTransform{FVector{0.0f, -240.0f, 110.0f}};
+
 UWorld* GetTestGameWorld();
 
 void CallFuncByNameWithParams(UObject* Object, const FString& FuncName, const TArray<FString>& Params);

@@ -30,13 +30,6 @@ bool FCheckHealth::Update()
 
 // FString TheFloatStr = FString::SanitizeFloat(f);
 
-namespace
-{
-constexpr char* MapName = "/Game/Levels/TestLevel";
-constexpr char* Character_bp = "/Script/Engine.Blueprint'/Game/Player/BP_STUBaseCharacter.BP_STUBaseCharacter'";
-const FTransform InitialTransform{FVector{0.0f, -240.0f, 110.0f}};
-}  // namespace
-
 void FTestCharacterHealthSystem::Define()
 {
 
