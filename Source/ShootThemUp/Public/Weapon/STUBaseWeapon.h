@@ -27,6 +27,7 @@ public:
 
     void ChangeClip();
     bool CanReload() const;
+    bool IsAmmoFull() const;
 
     bool TryToAddAmmo(int32 ClipsAmount);
 
@@ -67,7 +68,6 @@ protected:
     void DecreaseAmmo();
 
     bool IsClipEmpty() const;
-    bool IsAmmoFull() const;
 
     void LogAmmo();
 
