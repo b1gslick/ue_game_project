@@ -3,7 +3,7 @@
 rem Engine params
 set EnginePath=C:\JenkinsJob\UE
 set EnginePathInstalledBuild=C:\JenkinsJob\UE\LocalBuilds\Engine\Windows
-set FromCrush=C:\ue_pkgs\UE5_Windows_5.1.1-release_5ca9da8
+set FromCrush=C:\ue_pkgs\UE5_Windows_5.2.1-release_4634430
 @REM set VersionSelector=C:\JenkinsJob\UE\Engine\Binaries\Win64\UnrealVersionSelector.exe
 set VersionSelector=C:\Program Files (x86)\Epic Games\Launcher\Engine\Binaries\Win64\UnrealVersionSelector.exe
 

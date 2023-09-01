@@ -89,11 +89,11 @@ void ASTURifleWeapon::MakeDamage(const FHitResult& HitResult)
 
     if (HitResult.BoneName.ToString() == HeadBone)
     {
-        Target->TakeDamage(HitDamagePoints.Head, FDamageEvent{}, GetPlayerController(), this);
+        Target->TakeDamage(HitDamagePoints.Head, FDamageEvent{}, GetController(), this);
     }
     else
     {
-        Target->TakeDamage(HitDamagePoints.Other, FDamageEvent{}, GetPlayerController(), this);
+        Target->TakeDamage(HitDamagePoints.Other, FDamageEvent{}, GetController(), this);
     }
 }
 
@@ -124,4 +124,10 @@ void ASTURifleWeapon::SpawnTraceFX(const FVector& TraceStart, const FVector& Tra
     {
         TraceFXComponent->SetNiagaraVariableVec3(TraceTargetName, TraceEnd);
     }
+}
+
+AController* ASTURifleWeapon::GetController() const
+{
+    const auto Pawn = Cast<APawn>(GetOwner());
+    return Pawn ? Pawn->GetController() : nullptr;
 }
