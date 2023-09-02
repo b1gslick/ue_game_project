@@ -23,12 +23,9 @@ using namespace ShootThemUp::Test;
 DEFINE_LATENT_AUTOMATION_COMMAND_TWO_PARAMETER(FCheckHealth, ASTUBaseCharacter*, SUT_Character, float, ExceptedAmount);
 bool FCheckHealth::Update()
 {
-    UE_LOG(LogTemp, Display, TEXT("Currnet health is: %f"), SUT_Character->GetHealth());
     if (!FMath::IsNearlyEqual(SUT_Character->GetHealth(), ExceptedAmount)) return false;
     return true;
 }
-
-// FString TheFloatStr = FString::SanitizeFloat(f);
 
 void FTestCharacterHealthSystem::Define()
 {
@@ -93,7 +90,6 @@ void FTestCharacterHealthSystem::Define()
                     ADD_LATENT_AUTOMATION_COMMAND(FFunctionLatentCommand(
                         [=]()
                         {
-                            UE_LOG(LogTemp, Display, TEXT("Currnet health is: %f"), SUT_Character->GetHealth());
                             TestTrueExpr(SUT_Character->GetHealth() < Expected);
                             return true;
                         }));
@@ -136,7 +132,6 @@ void FTestCharacterHealthSystem::Define()
 
                     const float HealthDiff = MaxHealth - SUT_Character->GetHealth();
                     const float HealingDuration = HealRate * HealthDiff / HealModifier;
-                    UE_LOG(LogTemp, Error, TEXT("HealingDuration %f"), HealingDuration)
                     ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(
                         [SUT_Character, StartedHealth]()
                         {
