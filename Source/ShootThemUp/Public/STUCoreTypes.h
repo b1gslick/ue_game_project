@@ -116,3 +116,35 @@ enum class ESTUMatchState : uint8
 };
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnMatchStateChangeSignature, ESTUMatchState);
+
+USTRUCT(BlueprintType)
+struct FHealthData
+{
+    GENERATED_USTRUCT_BODY()
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (ClampMin = "0", ClampMax = "1000.0"));
+    float MaxHealth{100.0f};
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+    bool AutoHeal{true};
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (ClampMin = "0.1", EditCondition = "AutoHeal"))
+    float HealUpdateTime{0.3f};
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (ClampMin = "0.1", EditCondition = "AutoHeal"))
+    float HealDelay{3.0f};
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (ClampMin = "0.1", EditCondition = "AutoHeal"))
+    float HealModifier{1.0f};
+
+    FString ToString() const
+    {                                                                                                              //
+        return FString::Printf(TEXT("(MaxHealth=%f,AutoHeal=%i,HealUpdateTime=%f,HealDelay=%f,HealModifier=%f)"),  //
+            MaxHealth,                                                                                             //
+            AutoHeal,                                                                                              //
+            HealUpdateTime,                                                                                        //
+            HealDelay,                                                                                             //
+            HealModifier                                                                                           //
+        );
+    }
+};

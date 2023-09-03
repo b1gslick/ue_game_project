@@ -8,17 +8,17 @@
 #include "ShootThemUp/Public/Player/STUBaseCharacter.h"
 #include "GameFramework/PlayerController.h"
 #include "Components/InputComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "STUTestItem.h"
+#include "STUUtils.h"
+#include "Components/SphereComponent.h"
 
-// DEFINE_SPEC(FTestCharacterFastRunning, "ShootThemUp.Character.Movement.TestCharacterFastRunning",
-//    EAutomationTestFlags::ApplicationContextMask | EAutomationTestFlags::ProductFilter | EAutomationTestFlags::HighPriority)
-
-// DEFINE_SPEC(FTestClassName, "Category.TestName",
-//    EAutomationTestFlags::ApplicationContextMask | EAutomationTestFlags::ProductFilter | EAutomationTestFlags::HighPriority)
 
 BEGIN_DEFINE_SPEC(FTestCharacterMovement, "ShootThemUp.Character.Movement",
     EAutomationTestFlags::ApplicationContextMask | EAutomationTestFlags::ProductFilter | EAutomationTestFlags::HighPriority)
 
 UWorld* World;
+static constexpr char* TestItemName = "/Script/Engine.Blueprint'/Game/Tests/BP_STUTestItem.BP_STUTestItem'";
 
 END_DEFINE_SPEC(FTestCharacterMovement)
 
@@ -30,12 +30,6 @@ DEFINE_LATENT_AUTOMATION_COMMAND_ONE_PARAMETER(FNewJumpLatentCommand, UInputComp
 bool FNewJumpLatentCommand::Update()
 {
     JumpPressed(InputComponent);
-    return true;
-}
-
-bool FFastRunLatentCommand::Update()
-{
-    FastRunPressed(InputComponent);
     return true;
 }
 
@@ -51,40 +45,58 @@ void FTestCharacterMovement::Define()
                     World = GetTestGameWorld();
                     TestNotNull("Map not exists", World);
                 });
-            /*          It("Test",
-                          [this]()
-                          {
-                              ASTUBaseCharacter* SUT_Character = CreateBlueprintDeferred<ASTUBaseCharacter>(World, Character_bp,
-               InitialTransform); if (!TestNotNull("Character exist", SUT_Character)) return false;
 
-                              APlayerController* PC = GetTestGameWorld()->GetFirstPlayerController();
-                              TestTrueExpr(PC != nullptr);
-
-                              ADD_LATENT_AUTOMATION_COMMAND(FEngineWaitLatentCommand(5.0f));
-                              ADD_LATENT_AUTOMATION_COMMAND(FFastRunLatentCommand(SUT_Character->InputComponent));
-
-                              return true;
-                          });*/
-
-            It("Jump",
+            It("Character jump with adecuate height",
                 [this]()
                 {
-                    const FTransform LandedInitialTransform{FVector{1200.0f, -600.0f, 100.0f}};
-                    ASTUBaseCharacter* SUT_Character =
-                        CreateBlueprintDeferred<ASTUBaseCharacter>(World, Character_bp, LandedInitialTransform);
+                    AActor* SUT_Character = Cast<AActor>(CreateBlueprintDeferred<ASTUBaseCharacter>(  //
+                        World,                                                                      //
+                        Character_bp,                                                               //
+                        InitialTransform                                                            //
+                    ));
+                    // add 40 units for Z coordinate for
+
                     if (!TestNotNull("Character exist", SUT_Character)) return false;
-                    SUT_Character->FinishSpawning(LandedInitialTransform);
+
+                    SUT_Character->FinishSpawning(InitialTransform);
+
+                    const FTransform TestItemsTransform{FVector{1300.0f, -1486.0f, 350.0f}};
+                    ASTUTestItem* TestItem = CreateBlueprint<ASTUTestItem>(  //
+                        World,                                               //
+                        TestItemName,                                        //
+                        TestItemsTransform);
+
+                    const FTransform TestItemsTransformCantTaken{FVector{1300.0f, -1486.0f, 440.0f}};
+                    ASTUTestItem* TestItemCantTaken = CreateBlueprint<ASTUTestItem>(  //
+                        World,                                               //
+                        TestItemName,                                        //
+                        TestItemsTransformCantTaken);
+
+                    if (!TestNotNull("TestItem exist", TestItem)) return false;
+                    if (!TestNotNull("TestItem exist", TestItemCantTaken)) return false;
+
+                    TArray<AActor*> TestItems;
+                    UGameplayStatics::GetAllActorsOfClass(World, ASTUTestItem::StaticClass(), TestItems);
+                    if (!TestEqual("Only one item exists", TestItems.Num(), 2)) return false;
+
                     ADD_LATENT_AUTOMATION_COMMAND(FEngineWaitLatentCommand(1.0f))
                     ADD_LATENT_AUTOMATION_COMMAND(FNewJumpLatentCommand(SUT_Character->InputComponent));
+                    ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(
+                        [=]()
+                        {
+                            TArray<AActor*> TestItems;
+                            UGameplayStatics::GetAllActorsOfClass(World, ASTUTestItem::StaticClass(), TestItems);
+                            TestTrueExpr(TestItems.Num() == 1);
+                            TestNotNull("Exist", TestItemCantTaken);
 
+                        },
+                        2.0f));
+                    ADD_LATENT_AUTOMATION_COMMAND(FExitGameCommand);
                     return true;
                 });
 
-            AfterEach([this]() { SpecCloseLevel(World); });
+            // AfterEach([this]() { SpecCloseLevel(); });
         });
 }
-
-// /Script/Engine.World'/Game/Levels/TestLevel.TestLevel'
-// /Script/Engine.Blueprint'/Game/Player/BP_STUBaseCharacter.BP_STUBaseCharacter'
 
 #endif

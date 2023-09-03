@@ -13,7 +13,6 @@ DEFINE_LOG_CATEGORY_STATIC(LogHealthComponent, All, All);
 
 USTUHealthComponent::USTUHealthComponent()
 {
-
     PrimaryComponentTick.bCanEverTick = false;
 }
 
@@ -21,8 +20,9 @@ void USTUHealthComponent::BeginPlay()
 {
     Super::BeginPlay();
 
-    SetHealth(MaxHealth);
-    check(MaxHealth > 0);
+    SetHealth(HealthData.MaxHealth);
+    //UE_LOG(LogTemp, Display, TEXT("SET HEALTH DATA: %s"), *HealthData.ToString());
+    check(HealthData.MaxHealth > 0);
 
     AActor* ComponentOwner = GetOwner();
     if (ComponentOwner)
@@ -43,9 +43,10 @@ void USTUHealthComponent::OnTakeAnyDamage(
         Killed(InstigatedBy);
         OnDeath.Broadcast();
     }
-    else if (AutoHeal)
+    else if (HealthData.AutoHeal)
     {
-        GetWorld()->GetTimerManager().SetTimer(HealTimerHandle, this, &USTUHealthComponent::OnHealing, HealUpdateTime, true, HealDelay);
+        GetWorld()->GetTimerManager().SetTimer(
+            HealTimerHandle, this, &USTUHealthComponent::OnHealing, HealthData.HealUpdateTime, true, HealthData.HealDelay);
     }
 
     PlayCameraShake();
@@ -53,7 +54,7 @@ void USTUHealthComponent::OnTakeAnyDamage(
 
 void USTUHealthComponent::OnHealing()
 {
-    SetHealth(Health + HealModifier);
+    SetHealth(Health + HealthData.HealModifier);
 
     if (IsHealthFull() && GetWorld())
     {
@@ -63,7 +64,7 @@ void USTUHealthComponent::OnHealing()
 
 void USTUHealthComponent::SetHealth(float NewHealth)
 {
-    const auto NextHealth = FMath::Clamp(NewHealth, 0.0f, MaxHealth);
+    const auto NextHealth = FMath::Clamp(NewHealth, 0.0f, HealthData.MaxHealth);
     const auto HealthDelta = NextHealth - Health;
     Health = NextHealth;
     OnHealthChanged.Broadcast(Health, HealthDelta);
@@ -71,7 +72,7 @@ void USTUHealthComponent::SetHealth(float NewHealth)
 
 bool USTUHealthComponent::IsHealthFull() const
 {
-    return FMath::IsNearlyEqual(Health, MaxHealth);
+    return FMath::IsNearlyEqual(Health, HealthData.MaxHealth);
 }
 
 bool USTUHealthComponent::TryToAddHealth(float HealthAmount)

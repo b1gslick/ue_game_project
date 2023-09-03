@@ -42,9 +42,10 @@ public:
     ~LevelScope() { ADD_LATENT_AUTOMATION_COMMAND(FExitGameCommand); }
 };
 
-constexpr char* MapName = "/Game/Levels/TestLevel";
-constexpr char* Character_bp = "/Script/Engine.Blueprint'/Game/Player/BP_STUPlayerCharacter.BP_STUPlayerCharacter'";
-const FTransform InitialTransform{FVector{0.0f, -240.0f, 110.0f}};
+constexpr char* MapName = "/Game/Tests/MAP_FeatureTest";
+constexpr char* Character_bp = "/Script/Engine.Blueprint'/Game/Tests/BP_STUTestPlayerCharacter.BP_STUTestPlayerCharacter'";
+const FTransform InitialTransform{FVector{1280.0f, -1486.0f, 230.0f}};
+
 
 UWorld* GetTestGameWorld();
 
@@ -56,7 +57,7 @@ void DoInputAction(UInputComponent* InputComponent, const FString& ActionName, c
 
 void FastRunPressed(UInputComponent* InputComponent);
 
-void SpecCloseLevel(UWorld* World);
+void SpecCloseLevel();
 
 }  // namespace Test
 }  // namespace ShootThemUp

@@ -27,7 +27,6 @@ public class ShootThemUp : ModuleRules
         {
             "ShootThemUp/Public/Player",
             "ShootThemUp/Public/Components",
-            "ShootThemUp/Tests",
             "ShootThemUp/Public/Dev",
             "ShootThemUp/Public/Weapon",
             "ShootThemUp/Public/Weapon/Components",
@@ -38,7 +37,11 @@ public class ShootThemUp : ModuleRules
             "ShootThemUp/Public/AI/Tasks",
             "ShootThemUp/Public/AI/Services",
             "ShootThemUp/Public/AI/EQS",
-            "ShootThemUp/Public/AI/Decorators"
+            "ShootThemUp/Public/AI/Decorators",
+            "ShootThemUp/Public/Menu",
+            "ShootThemUp/Public/Menu/UI",
+            "ShootThemUp/Tests",
+            "ShootThemUp/Tests/Items",
         });
 
         // Uncomment if you are using Slate UI

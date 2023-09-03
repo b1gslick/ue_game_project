@@ -3,6 +3,8 @@
 #include "ShootThemUp/Tests/TestUtils.h"
 #include "BufferVisualizationData.h"
 #include "AutomationBlueprintFunctionLibrary.h"  // add FunctionalTesting to PublicDependencyModuleNames in your .Build.cs file
+#include "Kismet/GameplayStatics.h"
+
 
 namespace ShootThemUp
 {
@@ -78,23 +80,21 @@ void DoInputAction(UInputComponent* InputComponent, const FString& ActionName, c
     }
 }
 
-void FastRunPressed(UInputComponent* InputComponent)
-{
-    // const int32 MoveForwardIndex = GetAxisBindingIndexByName(InputComponent, "MoveForward");
-    //  InputComponent->AxisBindings[MoveForwardIndex].AxisDelegate.Execute(1.0f);
-    DoInputAction(InputComponent, "Run", EKeys::LeftShift);
-}
 
 void JumpPressed(UInputComponent* InputComponent)
 {
     DoInputAction(InputComponent, "Jump", EKeys::SpaceBar);
 }
-void SpecCloseLevel(UWorld* World)
+
+void SpecCloseLevel()
 {
 
-    if (APlayerController* PC = World->GetFirstPlayerController())
+    if (UWorld* World = GetTestGameWorld())
     {
-        PC->ConsoleCommand(TEXT("Exit"), true);
+        if (APlayerController* TargetPC = UGameplayStatics::GetPlayerController(World, 0))
+        {
+            TargetPC->ConsoleCommand(TEXT("Exit"), true);
+        }
     }
 }
 }  // namespace Test

@@ -1,4 +1,4 @@
-// Shoot Them Up game, All right resievied
+       // Shoot Them Up game, All right resievied
 
 #pragma once
 
@@ -18,6 +18,7 @@ public:
     ASTUBaseCharacter(const FObjectInitializer& ObjInit);
 
     float GetHealth() const;
+    float GetHealthPercents() const;
 
 protected:
     // Called when the game starts or when spawned

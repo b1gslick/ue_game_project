@@ -5,20 +5,18 @@
 #include "Components/STUWeaponComponent.h"
 #include "STUUtils.h"
 
-bool USTUPlayerHUDWidget::Initialize()
+void USTUPlayerHUDWidget::NativeOnInitialized()
 {
-
+    Super::NativeOnInitialized();
     if (GetOwningPlayer())
     {
         GetOwningPlayer()->GetOnNewPawnNotifier().AddUObject(this, &USTUPlayerHUDWidget::OnNewPawn);
         OnNewPawn(GetOwningPlayerPawn());
     }
-
-
-    return Super::Initialize();
 }
 
-void USTUPlayerHUDWidget::OnNewPawn(APawn* NewPawn) {
+void USTUPlayerHUDWidget::OnNewPawn(APawn* NewPawn)
+{
     const auto HealthComponent = STUUtils::GetSTUPlayerComponent<USTUHealthComponent>(NewPawn);
     if (HealthComponent)
     {
@@ -70,4 +68,3 @@ bool USTUPlayerHUDWidget::IsPlayerSpectating() const
     const auto Controller = GetOwningPlayer();
     return Controller && Controller->GetStateName() == NAME_Spectating;
 }
-

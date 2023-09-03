@@ -19,10 +19,7 @@ ASTUBaseCharacter::ASTUBaseCharacter(const FObjectInitializer& ObjInit)
     WeaponComponent = CreateDefaultSubobject<USTUWeaponComponent>("WeaponComponent");
 }
 
-float ASTUBaseCharacter::GetHealth() const
-{
-    return HealthComponent->GetHealth();
-}
+
 
 void ASTUBaseCharacter::BeginPlay()
 {
@@ -31,12 +28,22 @@ void ASTUBaseCharacter::BeginPlay()
     check(GetCharacterMovement());
     check(GetMesh());
 
-    OnHealthChanged(HealthComponent->GetHealth(), 0.0f);
+    OnHealthChanged(HealthComponent->GetHealth(), HealthComponent->GetHealth());
 
     HealthComponent->OnDeath.AddUObject(this, &ASTUBaseCharacter::OnDeath);
     HealthComponent->OnHealthChanged.AddUObject(this, &ASTUBaseCharacter::OnHealthChanged);
 
     LandedDelegate.AddDynamic(this, &ASTUBaseCharacter::OnGroundLanded);
+}
+
+float ASTUBaseCharacter::GetHealth() const
+{
+    return HealthComponent->GetHealth();
+}
+
+float ASTUBaseCharacter::GetHealthPercents() const
+{
+    return HealthComponent->GetHealthPercent();
 }
 
 void ASTUBaseCharacter::OnHealthChanged(float Health, float HealthDelta) {}
