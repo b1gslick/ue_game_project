@@ -1,7 +1,7 @@
 // Shoot Them Up game, All right resievied
 
 #include "Menu/UI/STUMenuHUD.h"
-#include "Blueprint/UserWidget.h"
+#include "UI/STUBaseWidget.h"
 
 void ASTUMenuHUD::BeginPlay()
 {
@@ -9,7 +9,7 @@ void ASTUMenuHUD::BeginPlay()
 
     if (MenuWidgetClass)
     {
-        const auto MenuWidget = CreateWidget<UUserWidget>(  //
+        const auto MenuWidget = CreateWidget<USTUBaseWidget>(  //
             GetWorld(),                                     //
             MenuWidgetClass                                 //
         );
@@ -17,6 +17,7 @@ void ASTUMenuHUD::BeginPlay()
         if (MenuWidget)
         {
             MenuWidget->AddToViewport();
+            MenuWidget->Show();
         }
     }
 }
