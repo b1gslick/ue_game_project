@@ -1,4 +1,4 @@
-       // Shoot Them Up game, All right resievied
+// Shoot Them Up game, All right resievied
 
 #pragma once
 
@@ -8,6 +8,7 @@
 
 class USTUHealthComponent;
 class USTUWeaponComponent;
+class USoundCue;
 
 UCLASS() class SHOOTTHEMUP_API ASTUBaseCharacter : public ACharacter
 {
@@ -44,6 +45,9 @@ protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Material")
     FName MaterialColorName = "Paint Color";
 
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sound")
+    USoundCue* DeathSound;
+
 public:
     virtual void Tick(float DeltaTime) override;
 
@@ -56,8 +60,6 @@ public:
     void SetPlayerColor(const FLinearColor& Color);
 
 private:
-
-
     UFUNCTION()
     void OnGroundLanded(const FHitResult& Hit);
 };

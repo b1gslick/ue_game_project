@@ -5,6 +5,8 @@
 #include "PhysicalMaterials/PhysicalMaterial.h"
 #include "Kismet/GameplayStatics.h"
 #include "Components/DecalComponent.h"
+#include "Sound/SoundCue.h"
+
 
 USTUWeaponFXComponent::USTUWeaponFXComponent()
 {
@@ -36,6 +38,14 @@ void USTUWeaponFXComponent::PlayImpactFX(const FHitResult& Hit)
         ImpactData.DecalData.Size,                                            //
         Hit.ImpactPoint,                                                      //
         Hit.ImpactNormal.Rotation());
+
+    // sound spawn
+
+    UGameplayStatics::PlaySoundAtLocation(  //
+        GetWorld(),                         //
+        ImpactData.ImpactSound,             //
+        Hit.ImpactPoint                     //
+    );
 
     if (DecalComponent)
     {

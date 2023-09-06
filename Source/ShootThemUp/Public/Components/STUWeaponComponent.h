@@ -24,6 +24,7 @@ public:
 
     bool GetCurrentWeaponUIData(FWeaponUIData& UIData) const;
     bool GetCurrentWeaponAmmoData(FAmmoData& AmmoData) const;
+    ASTUBaseWeapon* GetCurrentWeapon() const { return CurrentWeapon; }
 
     bool NeedAmmo(TSubclassOf<ASTUBaseWeapon> WeaponType);
 

@@ -9,6 +9,7 @@
 class USTUWeaponFXComponent;
 class UNiagaraComponent;
 class UNiagaraSystem;
+class UAudioComponent;
 
 USTRUCT(BlueprintType)
 struct FHitDamagePoints
@@ -72,8 +73,11 @@ private:
 
     void MakeDamage(const FHitResult& HitResult);
 
-    void InitMuzzleFX();
-    void SetMuzzleFXVisibility(bool Visible);
+    UPROPERTY()
+    UAudioComponent* FireAudioComponent;
+
+    void InitFX();
+    void SetFXActive(bool IsActive);
 
     void SpawnTraceFX(const FVector& TraceStart, const FVector& TraceEnd);
 

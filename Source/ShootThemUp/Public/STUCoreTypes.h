@@ -70,6 +70,8 @@ struct FDecalData
     float FadeOuttime = 0.7f;
 };
 
+class USoundCue;
+
 USTRUCT(BlueprintType)
 struct FImpactData
 {
@@ -80,6 +82,10 @@ struct FImpactData
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
     FDecalData DecalData;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sound")
+    USoundCue* ImpactSound;
+
 };
 
 USTRUCT(BlueprintType)

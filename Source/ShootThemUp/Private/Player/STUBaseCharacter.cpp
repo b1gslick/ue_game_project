@@ -7,6 +7,8 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/STUWeaponComponent.h"
 #include "GameFramework/Controller.h"
+#include "Sound/SoundCue.h"
+#include "Kismet/GameplayStatics.h"
 
 DEFINE_LOG_CATEGORY_STATIC(BaseCharacterLog, All, All);
 
@@ -18,8 +20,6 @@ ASTUBaseCharacter::ASTUBaseCharacter(const FObjectInitializer& ObjInit)
     HealthComponent = CreateDefaultSubobject<USTUHealthComponent>("HealthComponent");
     WeaponComponent = CreateDefaultSubobject<USTUWeaponComponent>("WeaponComponent");
 }
-
-
 
 void ASTUBaseCharacter::BeginPlay()
 {
@@ -64,7 +64,6 @@ void ASTUBaseCharacter::Tick(float DeltaTime)
     Super::Tick(DeltaTime);
 }
 
-
 bool ASTUBaseCharacter::IsRunning() const
 {
     return false;
@@ -94,6 +93,7 @@ void ASTUBaseCharacter::OnDeath()
 
     GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
     GetMesh()->SetSimulatePhysics(true);
+    UGameplayStatics::PlaySoundAtLocation(GetWorld(), DeathSound, GetActorLocation());
 }
 
 void ASTUBaseCharacter::SetPlayerColor(const FLinearColor& Color)

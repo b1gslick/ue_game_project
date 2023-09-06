@@ -12,6 +12,7 @@ class UHorizontalBox;
 class USTUGameInstance;
 class USTULevelItemWidget;
 class UWidgetAnimation;
+class USoundCue;
 
 UCLASS()
 class SHOOTTHEMUP_API USTUMenuWidget : public USTUBaseWidget
@@ -36,6 +37,9 @@ protected:
 
     UPROPERTY(meta = (BindWidgetAnim), Transient)
     UWidgetAnimation* HideAnimation;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sound")
+    USoundCue* StartGameSound;
 
 private:
     UPROPERTY()
