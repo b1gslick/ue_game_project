@@ -24,6 +24,7 @@ public:
 
     virtual void StartFire();
     virtual void StopFire();
+    virtual void Zoom(bool Enabled){};
     bool IsAmmoEmpty() const;
 
     void ChangeClip();

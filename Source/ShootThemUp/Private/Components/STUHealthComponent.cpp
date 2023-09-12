@@ -8,6 +8,7 @@
 #include "TimerManager.h"
 #include "Camera/CameraShakeBase.h"
 #include "STUGameModeBase.h"
+#include "Perception/AISense_Damage.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogHealthComponent, All, All);
 
@@ -21,7 +22,7 @@ void USTUHealthComponent::BeginPlay()
     Super::BeginPlay();
 
     SetHealth(HealthData.MaxHealth);
-    //UE_LOG(LogTemp, Display, TEXT("SET HEALTH DATA: %s"), *HealthData.ToString());
+    // UE_LOG(LogTemp, Display, TEXT("SET HEALTH DATA: %s"), *HealthData.ToString());
     check(HealthData.MaxHealth > 0);
 
     AActor* ComponentOwner = GetOwner();
@@ -50,6 +51,7 @@ void USTUHealthComponent::OnTakeAnyDamage(
     }
 
     PlayCameraShake();
+    ReportDamageEvent(Damage, InstigatedBy);
 }
 
 void USTUHealthComponent::OnHealing()
@@ -95,7 +97,7 @@ void USTUHealthComponent::PlayCameraShake()
     Controller->PlayerCameraManager->StartCameraShake(CameraShake);
 }
 
-void USTUHealthComponent::Killed(AController* KillerController) 
+void USTUHealthComponent::Killed(AController* KillerController)
 {
     if (!GetWorld()) return;
 
@@ -105,4 +107,16 @@ void USTUHealthComponent::Killed(AController* KillerController)
     const auto Player = Cast<APawn>(GetOwner());
     const auto VictimController = Player ? Player->Controller : nullptr;
     GameMode->Killed(KillerController, VictimController);
+}
+
+void USTUHealthComponent::ReportDamageEvent(float Damage, AController* InstigateBy)
+{
+    if (!InstigateBy || !InstigateBy->GetPawn() || !GetOwner()) return;
+
+    UAISense_Damage::ReportDamageEvent(GetWorld(),   //
+        GetOwner(),                                  //
+        InstigateBy->GetPawn(),                      //
+        Damage,                                      //
+        InstigateBy->GetPawn()->GetActorLocation(),  //
+        GetOwner()->GetActorLocation());
 }

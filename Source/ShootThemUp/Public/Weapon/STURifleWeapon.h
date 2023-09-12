@@ -41,6 +41,7 @@ public:
 
     virtual void StartFire() override;
     virtual void StopFire() override;
+    virtual void Zoom(bool Enabled) override;
 
 protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
@@ -65,6 +66,9 @@ protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "DamageAmountByHitPoint")
     FHitDamagePoints HitDamagePoints;
 
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
+    float FOVZoomAnge = 50.0f;
+
 private:
     FTimerHandle ShotTimerHandle;
 
@@ -82,4 +86,6 @@ private:
     void SpawnTraceFX(const FVector& TraceStart, const FVector& TraceEnd);
 
     AController* ASTURifleWeapon::GetController() const;
+
+    float DefaultCameraFOV = 90.0f;
 };

@@ -41,6 +41,7 @@ public class ShootThemUp : ModuleRules
             "ShootThemUp/Public/Menu",
             "ShootThemUp/Public/Menu/UI",
             "ShootThemUp/Tests",
+            "ShootThemUp/Public/Sound",
         });
 
         // Uncomment if you are using Slate UI
