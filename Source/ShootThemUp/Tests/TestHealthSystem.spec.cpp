@@ -12,9 +12,6 @@
 #include "STUUtils.h"
 #include "Components/STUHealthComponent.h"
 
-// DEFINE_SPEC(FTestClassName, "Category.TestName",
-//    EAutomationTestFlags::ApplicationContextMask | EAutomationTestFlags::ProductFilter | EAutomationTestFlags::HighPriority)
-
 BEGIN_DEFINE_SPEC(FTestCharacterHealthSystem, "ShootThemUp.HealthSystem",
     EAutomationTestFlags::ApplicationContextMask | EAutomationTestFlags::ProductFilter | EAutomationTestFlags::HighPriority)
 
