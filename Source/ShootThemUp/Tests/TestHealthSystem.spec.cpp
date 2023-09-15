@@ -173,6 +173,7 @@ void FTestCharacterHealthSystem::Define()
                     ADD_LATENT_AUTOMATION_COMMAND(FExitGameCommand);
                     return true;
                 });
+
             //AfterEach([this]() { SpecCloseLevel(); });
         });
 }
