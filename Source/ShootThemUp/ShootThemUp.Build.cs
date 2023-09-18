@@ -41,6 +41,7 @@ public class ShootThemUp : ModuleRules
             "ShootThemUp/Public/Menu",
             "ShootThemUp/Public/Menu/UI",
             "ShootThemUp/Tests",
+            "ShootThemUp/Tests/Helpers",
             "ShootThemUp/Public/Sound",
         });
 

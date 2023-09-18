@@ -1,6 +1,6 @@
 // Shoot Them Up game, All right resievied
 
-#include "ShootThemUp/Tests/TestUtils.h"
+#include "Helpers/TestUtils.h"
 #include "BufferVisualizationData.h"
 #include "AutomationBlueprintFunctionLibrary.h"  // add FunctionalTesting to PublicDependencyModuleNames in your .Build.cs file
 #include "Kismet/GameplayStatics.h"

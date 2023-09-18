@@ -4,12 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "Misc/AutomationTest.h"
-#include "ShootThemUp/Tests/TestUtils.h"
+#include "Helpers/TestUtils.h"
 #include "ShootThemUp/Public/Player/STUBaseCharacter.h"
 #include "GameFramework/PlayerController.h"
 #include "Components/InputComponent.h"
 #include "Kismet/GameplayStatics.h"
-#include "STUTestItem.h"
+#include "Helpers/STUTestItem.h"
 #include "STUUtils.h"
 #include "Components/SphereComponent.h"
 

@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Misc/AutomationTest.h"
-#include "ShootThemUp/Tests/TestUtils.h"
+#include "Helpers/TestUtils.h"
 #include "Player/STUBaseCharacter.h"
 #include "Components/InputComponent.h"
 #include "Kismet/GameplayStatics.h"
